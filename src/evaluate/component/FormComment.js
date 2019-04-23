@@ -34,6 +34,8 @@ class FormComment extends Component{
 
         const {submitting} = this.props;
 
+        console.log(submitting);
+
         return (
             <div>
                 <Comment

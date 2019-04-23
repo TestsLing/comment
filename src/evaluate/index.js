@@ -13,6 +13,7 @@ class Comment extends Component {
             comments: [],
             submitting: false,
             allComment: '',
+            replyLoading:false
         };
 
         this.uri = document.location.host + document.location.pathname;
@@ -85,18 +86,12 @@ class Comment extends Component {
 
                 this.setState({
                     allComment,
+                    submitting: false,
+                    value: '',
                 });
 
             }
         });
-
-        setTimeout(() => {
-            this.setState({
-                submitting: false,
-                value: '',
-            });
-        }, 1000);
-
     };
 
 
@@ -131,6 +126,10 @@ class Comment extends Component {
      */
     submit = (value, id) => {
 
+        this.setState({
+            replyLoading:true
+        });
+
         const { allComment } = this.state;
 
         value.father_id = id;
@@ -140,9 +139,9 @@ class Comment extends Component {
         inter.comment(param).then((res) => {
             if (res.success) {
                 let comments = this.getCurrentPart(allComment,res.result.comment);
-
                 this.setState({
-                    allComment:comments
+                    allComment:comments,
+                    replyLoading:false
                 });
             }
         });
@@ -210,6 +209,7 @@ class Comment extends Component {
                         email={tree.email}
                         content={tree.content}
                         onSubmit={this.submit}
+                        submiting={this.state.replyLoading}
                     >
                         {this.generateTree(tree.pid)}
                     </Message>

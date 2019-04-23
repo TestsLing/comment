@@ -30,22 +30,15 @@ export default class Message extends Component{
 
         const { onSubmit,id } = this.props;
 
-        this.setState({
-            submitting: true,
-        });
-
         onSubmit(value,id);
 
-        setTimeout(() => {
-            this.setState({
-                submitting: false,
-                value: '',
-            });
-        }, 1000);
+        this.setState({
+            value: '',
+        });
     }
 
     render(){
-        const { children,content,name,email} = this.props;
+        const { children,content,name,email, submiting} = this.props;
 
         const { showEditor} = this.state;
 
@@ -68,7 +61,7 @@ export default class Message extends Component{
                     <div>
                         <p>{content}</p>
                         {/*{showEditor && <Editor onChange={this.handleChange} onSubmit={this.onSubmit} submitting={submitting} value={value} />}*/}
-                        {showEditor && <FormComment onSubmit={this.onSubmit} />}
+                        {showEditor && <FormComment onSubmit={this.onSubmit} submitting={submiting} />}
                     </div>
 
                 }
